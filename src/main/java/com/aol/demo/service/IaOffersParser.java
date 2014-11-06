@@ -20,15 +20,11 @@ public class IaOffersParser {
 			Pattern.DOTALL);
 	
 	public List<String> toContentIds(String rawString) {
-		// Validate
 		validate(rawString);
-		
-		// Get the data
 		return parseIAResponseToContentIds(rawString);
 	}
 
 	private void validate(String offers) {
-		// Do validation and throw exception if required
 		String errorMessage = getMessage(ERROR_PATTERN, offers);
 		if(StringUtils.isEmpty(errorMessage)) {
 			return;
@@ -55,7 +51,7 @@ public class IaOffersParser {
 	    return offerIds;
 	}
 
-	// Name|15|webmail_lb_careOfferDisplayType|4|HeroAolOfferId|6|IA_662ContentId|15|webmail_lb_care	
+	// Id|Name|15|webmail_lb_careOfferDisplayType|4|HeroAolOfferId|6|IA_662ContentId|15|webmail_lb_care	
 	private String getContentId(String rec1) {
 		String subStr = rec1.substring(rec1.indexOf("ContentId|"));
 		String[] tokens = subStr.split("\\|");
