@@ -10,11 +10,11 @@ import com.aol.demo.RestConfiguration;
 @Configuration
 @ImportResource({"classpath*:spring/properties-context.xml"})
 @Import({RestConfiguration.class})
-public class IaDaoIntegrationTestConfig {
+public class CatalogDaoIntegrationTestConfig {
 	
 	@Bean
-	public IaDao iaDao() {
-		return new IaDaoImpl();
+	public CatalogDao catalogService() {
+		return new CatalogDaoImpl();
 	}
 	
 }

@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
 
+import com.aol.demo.model.EcommerceWrapper;
 import com.aol.demo.model.Product;
-import com.aol.demo.model.ProductWrapper;
 
 @Service
 public class CatalogDaoImpl implements CatalogDao {
@@ -20,7 +20,7 @@ public class CatalogDaoImpl implements CatalogDao {
 	@Override
 	public Product getProduct(String sku) {
 		String url = String.format("%s/products/%s", ecommerceEndpoint, sku);
-		ProductWrapper wrapper = restOperations.getForObject(url, ProductWrapper.class);
+		EcommerceWrapper wrapper = restOperations.getForObject(url, EcommerceWrapper.class);
 		return wrapper.getProduct();
 	}
 

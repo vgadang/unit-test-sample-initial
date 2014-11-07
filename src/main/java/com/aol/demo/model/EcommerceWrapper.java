@@ -3,10 +3,12 @@ package com.aol.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class ProductWrapper {
+public class EcommerceWrapper {
 	private String code;
 	private String description;
 	private Product product;
+	private CmsBlock cmsBlock;
+	
 	public String getCode() {
 		return code;
 	}
@@ -24,5 +26,11 @@ public class ProductWrapper {
 	}
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+	public CmsBlock getCmsBlock() {
+		return cmsBlock;
+	}
+	public void setCmsBlock(CmsBlock cmsBlock) {
+		this.cmsBlock = cmsBlock;
 	}
 }
