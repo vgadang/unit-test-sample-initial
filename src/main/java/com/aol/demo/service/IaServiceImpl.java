@@ -23,34 +23,39 @@ public class IaServiceImpl implements IaService {
 	
 	@Override
 	public List<String> getOffers(OfferRequest request) {
-		String offers = iaDao.getOffers(request);
+		List<String> offerIds = new ArrayList<String>();
+		String error = "";
+		String cause = "";
 		
-		Matcher errorMatcher = ERROR_PATTERN.matcher(offers);
-		if(errorMatcher.find()) {
-			String error = errorMatcher.group();
-			Matcher causeMatcher = CAUSE_PATTERN.matcher(offers);
-			
-			String causeMessage = "";
-			if(causeMatcher.find()) {
-				causeMessage = errorMatcher.group();
+		String offers = iaDao.getOffers(request);
+		Matcher matcher = ERROR_PATTERN.matcher(offers);
+		if(matcher.find()) {
+			error = matcher.group();
+			matcher = CAUSE_PATTERN.matcher(offers);
+			if(matcher.find()) {
+				cause = matcher.group();
+			} else {
+				cause = "";
 			}
-			throw new IaException(error, causeMessage);
+			throw new IaException(error, cause);
 			
 		} else {
 
-			List<String> offerIds = new ArrayList<String>();
-		    String substring = offers.substring(7);
-			String[] recs = substring.split("Id\\|Name");
-			for(String rec : recs) {
-		    	// Id|Name|15|webmail_lb_careOfferDisplayType|4|HeroAolOfferId|6|IA_662ContentId|15|webmail_lb_care	
-				String subStr = rec.substring(rec.indexOf("ContentId|"));
-				String[] tokens = subStr.split("\\|");
-				int length = Integer.parseInt(tokens[1]);
-				offerIds.add(tokens[2].substring(0, length));
+			String[] recs = offers.substring(7).split("Id\\|Name");
+			if(recs!=null && recs.length>0) {
+				for(String rec : recs) {
+			    	// Id|Name|15|webmail_lb_careOfferDisplayType|4|HeroAolOfferId|6|IA_662ContentId|15|webmail_lb_care	
+					String[] tokens = rec.substring(rec.indexOf("ContentId|")).split("\\|");
+					int length = Integer.parseInt(tokens[1]);
+					offerIds.add(tokens[2].substring(0, length));
+				}
+			} else {
+				return null;
 			}
 		    
-		    return offerIds;
 		}
+
+		return offerIds;
 	}
 
 }
