@@ -13,7 +13,7 @@ import com.aol.demo.RestConfiguration;
 public class CatalogDaoIntegrationTestConfig {
 	
 	@Bean
-	public CatalogDao catalogService() {
+	public CatalogDao catalogDao() {
 		return new CatalogDaoImpl();
 	}
 	
