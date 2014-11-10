@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class JsonUtils {
 
@@ -17,6 +18,7 @@ public class JsonUtils {
 				return null;
 			}
 			
+			OBJECT_MAPPER.enable(SerializationFeature.INDENT_OUTPUT);
 			return OBJECT_MAPPER.writeValueAsString(object);
 			
 		} catch (Exception e) {
@@ -33,6 +35,7 @@ public class JsonUtils {
 			}
 			
 			OBJECT_MAPPER.setSerializationInclusion(Include.NON_NULL);
+			OBJECT_MAPPER.enable(SerializationFeature.INDENT_OUTPUT);
 			return OBJECT_MAPPER.writeValueAsString(object);
 			
 		} catch (Exception e) {
